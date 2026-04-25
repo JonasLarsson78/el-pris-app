@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { getVersion } from '@tauri-apps/api/app'
+import { openUrl } from '@tauri-apps/plugin-opener'
 import { Bar, Line } from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -334,11 +335,34 @@ watch(currentView, async (v) => {
 })
 
 const appVersion = ref('')
+const updateTag = ref<string | null>(null)
+
+function isNewer(latest: string, current: string): boolean {
+  const a = latest.split('.').map(Number)
+  const b = current.split('.').map(Number)
+  for (let i = 0; i < 3; i++) {
+    if ((a[i] ?? 0) > (b[i] ?? 0)) return true
+    if ((a[i] ?? 0) < (b[i] ?? 0)) return false
+  }
+  return false
+}
+
+async function checkForUpdates(current: string) {
+  try {
+    const res = await fetch('https://api.github.com/repos/JonasLarsson78/el-pris-app/releases/latest')
+    if (!res.ok) return
+    const data = await res.json()
+    const tag: string = data.tag_name ?? ''
+    const latest = tag.replace(/^v/, '')
+    if (latest && isNewer(latest, current)) updateTag.value = tag
+  } catch { /* nätverksfel – ignorera */ }
+}
 
 watch([selectedZone, selectedDate], load)
 onMounted(async () => {
   load()
   appVersion.value = await getVersion()
+  checkForUpdates(appVersion.value)
 })
 </script>
 
@@ -395,6 +419,12 @@ onMounted(async () => {
       </div>
       <span v-if="appVersion" class="app-version">v{{ appVersion }}</span>
     </header>
+
+    <div v-if="updateTag" class="update-banner">
+      <span>Ny version tillgänglig: <strong>{{ updateTag }}</strong></span>
+      <button class="update-btn" @click="openUrl('https://github.com/JonasLarsson78/el-pris-app/releases/latest')">Ladda ner</button>
+      <button class="update-dismiss" @click="updateTag = null">✕</button>
+    </div>
 
     <main class="app-main">
       <HistoryView v-if="currentView === 'history'" :zone="selectedZone" />

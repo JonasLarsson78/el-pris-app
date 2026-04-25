@@ -238,6 +238,50 @@ html, body {
   text-align: center;
 }
 
+// ── Update banner ─────────────────────────────────────────
+.update-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 20px;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  font-size: 13px;
+  color: var(--text);
+  flex-shrink: 0;
+
+  span { flex: 1; }
+
+  strong { color: var(--accent); }
+}
+
+.update-btn {
+  padding: 4px 14px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover { background: var(--accent-hover); }
+}
+
+.update-dismiss {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 2px 4px;
+  line-height: 1;
+
+  &:hover { color: var(--text); }
+}
+
 // ── Main ──────────────────────────────────────────────────
 .app-main {
   flex: 1;
