@@ -1,11 +1,10 @@
-use tauri::Manager;
-
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .setup(|app| {
+        .setup(|_app| {
             #[cfg(target_os = "macos")]
             {
+                use tauri::Manager;
                 use image::ImageReader;
                 use std::io::Cursor;
 
@@ -19,7 +18,7 @@ pub fn run() {
                 let (width, height) = rgba.dimensions();
                 let icon = tauri::image::Image::new_owned(rgba.into_raw(), width, height);
 
-                if let Some(window) = app.get_webview_window("main") {
+                if let Some(window) = _app.get_webview_window("main") {
                     let _ = window.set_icon(icon);
                 }
             }
