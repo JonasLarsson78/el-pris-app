@@ -33,6 +33,10 @@ function updateToml(file, key) {
 }
 
 updateJSON('package.json', j => { j.version = version })
+updateJSON('package-lock.json', j => {
+  j.version = version
+  if (j.packages?.['']) j.packages[''].version = version
+})
 updateJSON('src-tauri/tauri.conf.json', j => { j.version = version })
 updateToml('src-tauri/Cargo.toml', 'version')
 
