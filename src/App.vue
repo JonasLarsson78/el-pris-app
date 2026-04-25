@@ -422,7 +422,7 @@ onMounted(async () => {
 
     <div v-if="updateTag" class="update-banner">
       <span>Ny version tillgänglig: <strong>{{ updateTag }}</strong></span>
-      <button class="update-btn" @click="openUrl('https://github.com/JonasLarsson78/el-pris-app/releases/latest')">Ladda ner</button>
+      <button class="update-btn" @click="openUrl('https://github.com/JonasLarsson78/el-pris-app/releases/latest').catch(e => console.error('openUrl failed:', e))">Ladda ner</button>
       <button class="update-dismiss" @click="updateTag = null">✕</button>
     </div>
 
