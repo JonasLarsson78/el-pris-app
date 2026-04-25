@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { readFileSync, writeFileSync } from 'fs'
+import { execSync } from 'child_process'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -33,11 +34,11 @@ function updateToml(file, key) {
 }
 
 updateJSON('package.json', j => { j.version = version })
-updateJSON('package-lock.json', j => {
-  j.version = version
-  if (j.packages?.['']) j.packages[''].version = version
-})
 updateJSON('src-tauri/tauri.conf.json', j => { j.version = version })
 updateToml('src-tauri/Cargo.toml', 'version')
+
+// Regenerera package-lock.json
+execSync('npm install --package-lock-only', { cwd: root, stdio: 'inherit' })
+console.log(`✓ package-lock.json regenererad`)
 
 console.log(`\nVersion satt till ${version}`)
