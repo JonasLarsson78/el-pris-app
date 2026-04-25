@@ -41,4 +41,18 @@ updateToml('src-tauri/Cargo.toml', 'version')
 execSync('npm install --package-lock-only', { cwd: root, stdio: 'inherit' })
 console.log(`✓ package-lock.json regenererad`)
 
-console.log(`\nVersion satt till ${version}`)
+// Commit + tag + push
+execSync('git add package.json package-lock.json src-tauri/tauri.conf.json src-tauri/Cargo.toml', { cwd: root, stdio: 'inherit' })
+execSync(`git commit -m "chore: bump version to ${version}"`, { cwd: root, stdio: 'inherit' })
+
+// Ta bort befintlig tagg om den finns
+try {
+  execSync(`git tag -d v${version}`, { cwd: root, stdio: 'pipe' })
+  execSync(`git push origin --delete v${version}`, { cwd: root, stdio: 'pipe' })
+} catch { /* taggen fanns inte */ }
+
+execSync(`git tag v${version}`, { cwd: root, stdio: 'inherit' })
+execSync('git push', { cwd: root, stdio: 'inherit' })
+execSync(`git push origin v${version}`, { cwd: root, stdio: 'inherit' })
+
+console.log(`\n✓ Version ${version} taggad och pushad → GitHub Actions startar bygget`)
