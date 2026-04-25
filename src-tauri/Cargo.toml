@@ -1,0 +1,29 @@
+[package]
+name = "el-pris"
+version = "1.0.0"
+description = "El Pris – Elpriser per zon och dag"
+authors = []
+edition = "2021"
+
+[lib]
+name = "el_pris_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+image = { version = "0.25", default-features = false, features = ["png"] }
+
+[profile.dev]
+incremental = true
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true
