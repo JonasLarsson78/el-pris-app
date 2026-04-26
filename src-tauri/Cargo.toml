@@ -1,6 +1,6 @@
 [package]
 name = "el-pris"
-version = "1.0.2"
+version = "1.0.3"
 description = "El Pris – Elpriser per zon och dag"
 authors = []
 edition = "2021"
