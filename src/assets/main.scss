@@ -667,25 +667,110 @@ html, body {
   gap: 12px;
 }
 
-// ── Grid section ──────────────────────────────────────────
-.grid-section {
+// ── Cost settings ─────────────────────────────────────────
+.settings-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+  align-self: flex-end;
+
+  &:hover { background: var(--surface-alt); color: var(--text); }
+  &.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+}
+
+.cost-settings {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
 }
 
-.grid-header {
+.cost-settings-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  cursor: pointer;
-
-  &:hover { background: var(--surface-alt); }
+  padding: 10px 16px;
+  background: var(--surface-alt);
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
 }
 
+.settings-close {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  padding: 2px;
+
+  &:hover { color: var(--text); }
+}
+
+.settings-section {
+  padding: 12px 16px;
+
+  & + & {
+    border-top: 1px solid var(--border);
+  }
+}
+
+.settings-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.provider-toggles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.provider-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+}
+
+.grid-expand-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+
+  &:hover { color: var(--text); }
+}
+
+// ── Grid section ──────────────────────────────────────────
 .grid-toggle {
   display: flex;
   align-items: center;
@@ -696,20 +781,11 @@ html, body {
   cursor: pointer;
 
   input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     accent-color: var(--accent);
     cursor: pointer;
   }
-}
-
-.grid-expand-btn {
-  border: none;
-  background: transparent;
-  color: var(--text-secondary);
-  cursor: pointer;
-  padding: 2px;
-  display: flex;
 }
 
 .grid-fields {
@@ -744,6 +820,14 @@ html, body {
   border-top: 1px solid var(--border);
 
   strong { color: var(--text); }
+}
+
+// ── Cost disclaimer ───────────────────────────────────────
+.cost-disclaimer {
+  font-size: 11px;
+  color: var(--text-secondary);
+  opacity: 0.7;
+  text-align: center;
 }
 
 // ── Provider list ─────────────────────────────────────────
