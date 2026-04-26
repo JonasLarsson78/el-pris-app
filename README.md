@@ -1,6 +1,8 @@
 # El Pris
 
-macOS-app som visar svenska elpriser i realtid, per elzon och dag.
+![El Pris screenshot](src/assets/Screenshot.png)
+
+App för macOS och Windows (ej testad) som visar svenska elpriser i realtid, per elzon och dag.
 
 Byggd med Tauri 2, Vue 3 och Vite.
 
